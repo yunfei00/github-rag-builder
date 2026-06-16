@@ -17,7 +17,10 @@ items = json.loads(
 results = []
 
 for item in items:
-    text = (item["title"] + "\n" + item["content"]).lower()
+    text = (
+        item["title"] + "\n" + item["content"]
+    ).lower()
+
     score = 0
 
     for word in query.lower().split():
@@ -27,7 +30,10 @@ for item in items:
     if score > 0:
         results.append((score, item))
 
-results.sort(key=lambda x: x[0], reverse=True)
+results.sort(
+    key=lambda x: x[0],
+    reverse=True
+)
 
 print(f"Query: {query}")
 print(f"Results: {len(results)}")
