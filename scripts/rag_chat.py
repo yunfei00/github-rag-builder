@@ -11,6 +11,12 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from src.config_loader import load_config, project_path
+from src.retrieval_utils import (
+    build_query_text,
+    candidate_count,
+    chunks_from_results,
+    rerank_chunks,
+)
 
 
 def retrieve_chunks(question, cfg):
@@ -24,26 +30,23 @@ def retrieve_chunks(question, cfg):
     client = chromadb.PersistentClient(path=str(vector_db_path))
     collection = client.get_collection(name=collection_name)
 
+    query_for_embedding = build_query_text(question)
+
     query_embedding = model.encode(
-        [question],
+        [query_for_embedding],
         normalize_embeddings=True
     ).tolist()
 
     results = collection.query(
         query_embeddings=query_embedding,
-        n_results=top_k
+        n_results=candidate_count(top_k)
     )
 
-    chunks = []
-    for index, chunk_id in enumerate(results["ids"][0]):
-        chunks.append({
-            "id": chunk_id,
-            "document": results["documents"][0][index],
-            "metadata": results["metadatas"][0][index],
-            "distance": results["distances"][0][index],
-        })
-
-    return chunks
+    return rerank_chunks(
+        question,
+        chunks_from_results(results),
+        top_k
+    )
 
 
 def build_prompt(question, chunks):
@@ -107,7 +110,8 @@ def print_retrieved_chunks(chunks):
         print(
             f"{index}. {metadata.get('title', '')} | "
             f"{metadata.get('source', '')} | "
-            f"{metadata.get('file', '')}"
+            f"{metadata.get('file', '')} | "
+            f"distance={chunk['distance']}"
         )
 
 

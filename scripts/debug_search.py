@@ -18,11 +18,14 @@ from src.retrieval_utils import (
 )
 
 
+TOP_K = 5
+
+
 def main():
     query = " ".join(sys.argv[1:]).strip()
 
     if not query:
-        print("Usage: python scripts/search_vector.py <question>")
+        print("Usage: python scripts/debug_search.py <question>")
         sys.exit(1)
 
     try:
@@ -34,32 +37,30 @@ def main():
     embedding_model_path = project_path(cfg["embedding"]["model_path"])
     vector_db_path = project_path(cfg["vector_db"]["path"])
     collection_name = cfg["vector_db"]["collection"]
-    top_k = int(cfg["retriever"]["top_k"])
 
     model = SentenceTransformer(str(embedding_model_path))
 
     client = chromadb.PersistentClient(path=str(vector_db_path))
     collection = client.get_collection(name=collection_name)
 
-    query_for_embedding = build_query_text(query)
-
     query_embedding = model.encode(
-        [query_for_embedding],
+        [build_query_text(query)],
         normalize_embeddings=True
     ).tolist()
 
     results = collection.query(
         query_embeddings=query_embedding,
-        n_results=candidate_count(top_k)
+        n_results=candidate_count(TOP_K)
     )
 
     chunks = rerank_chunks(
         query,
         chunks_from_results(results),
-        top_k
+        TOP_K
     )
 
     print(f"Query: {query}")
+    print(f"Top K: {TOP_K}")
 
     for index, chunk in enumerate(chunks):
         metadata = chunk["metadata"]
@@ -69,12 +70,9 @@ def main():
         print(f"Rank: {index + 1}")
         print(f"Chunk ID: {chunk['id']}")
         print(f"Title: {metadata.get('title', '')}")
-        print(f"Source: {metadata.get('source', '')}")
-        print(f"File: {metadata.get('file', '')}")
         print(f"Distance: {chunk['distance']}")
         print("-" * 50)
-        print("Content preview:")
-        print(chunk["document"][:500])
+        print(chunk["document"][:300])
 
 
 if __name__ == "__main__":

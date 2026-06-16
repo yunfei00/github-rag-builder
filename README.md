@@ -34,6 +34,12 @@ python scripts/build_vector_db.py
 python scripts/search_vector.py "为什么要使用 LangChain"
 ```
 
+## Debug Search
+
+```bash
+python scripts/debug_search.py "为什么要使用 LangChain"
+```
+
 ## RAG Chat
 
 ```bash

@@ -45,22 +45,34 @@ def main():
 
     ids = []
     documents = []
+    embedding_texts = []
     metadatas = []
 
     for item in items:
-        text = f"{item['title']}\n\n{item['content']}"
+        source = item["source"]
+        file = item["file"]
+        title = item["title"]
+        content = item["content"]
+
+        text_for_embedding = f"""Project: {source}
+File: {file}
+Title: {title}
+
+{content}
+"""
 
         ids.append(item["chunk_id"])
-        documents.append(text)
+        documents.append(content)
+        embedding_texts.append(text_for_embedding)
         metadatas.append({
-            "source": item["source"],
-            "file": item["file"],
-            "title": item["title"],
+            "source": source,
+            "file": file,
+            "title": title,
             "chunk_id": item["chunk_id"],
         })
 
     embeddings = model.encode(
-        documents,
+        embedding_texts,
         normalize_embeddings=True
     ).tolist()
 
