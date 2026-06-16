@@ -1,0 +1,11 @@
+---
+source: firecrawl
+owner: firecrawl
+repo: firecrawl
+path: examples/llama-4-maverick-web-crawler/requirements.txt
+url: https://github.com/firecrawl/firecrawl/blob/main/examples/llama-4-maverick-web-crawler/requirements.txt
+---
+
+firecrawl>=0.1.0
+together>=0.2.0
+python-dotenv>=0.19.0 

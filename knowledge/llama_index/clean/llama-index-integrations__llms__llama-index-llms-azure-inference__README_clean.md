@@ -1,0 +1,19 @@
+---
+source: llama_index
+owner: run-llama
+repo: llama_index
+path: llama-index-integrations/llms/llama-index-llms-azure-inference/README.md
+url: https://github.com/run-llama/llama_index/blob/main/llama-index-integrations/llms/llama-index-llms-azure-inference/README.md
+---
+# LlamaIndex LLMs Integration: Azure AI model inference
+
+The integration package `llama-index-llms-azure-inference` brings support for language models deployed in Azure AI, including Azure AI studio and Azure Machine Learning, to the `llama_index` ecosystem. Any model endpoint supporting the Azure AI model inference API can be used with this integration.
+
+For details and examples about how to use this integration, see Getting starting with LlamaIndex and Azure AI.
+
+## Changelog
+
+- **0.2.4**:
+
+  - Introduce `api_version` parameter in the `AzureAICompletionsModel` class to allow overriding of the default value.
+  - Introduce support for Azure AI model inference service which requires `azure-ai-inference>=1.0.0b5`.

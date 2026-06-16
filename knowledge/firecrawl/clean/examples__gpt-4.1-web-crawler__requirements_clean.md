@@ -1,0 +1,10 @@
+---
+source: firecrawl
+owner: firecrawl
+repo: firecrawl
+path: examples/gpt-4.1-web-crawler/requirements.txt
+url: https://github.com/firecrawl/firecrawl/blob/main/examples/gpt-4.1-web-crawler/requirements.txt
+---
+firecrawl==0.11.0
+openai==1.14.0
+python-dotenv==1.0.0

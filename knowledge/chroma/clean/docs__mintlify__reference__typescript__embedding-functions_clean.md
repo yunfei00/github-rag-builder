@@ -1,0 +1,40 @@
+---
+source: chroma
+owner: chroma-core
+repo: chroma
+path: docs/mintlify/reference/typescript/embedding-functions.mdx
+url: https://github.com/chroma-core/chroma/blob/main/docs/mintlify/reference/typescript/embedding-functions.mdx
+---
+---
+title: "Embedding Functions"
+---
+
+## Embedding Functions
+
+### EmbeddingFunction
+
+Interface for embedding functions.
+Embedding functions transform text documents into numerical representations
+that can be used for similarity search and other vector operations.
+
+Properties
+
+  Optional name identifier for the embedding function
+
+Methods
+
+`buildFromConfig()`, `defaultSpace()`, `generate()`, `generateForQueries()`, `getConfig()`, `supportedSpaces()`, `validateConfig()`, `validateConfigUpdate()`
+
+### SparseEmbeddingFunction
+
+Interface for sparse embedding functions.
+Sparse embedding functions transform text documents into sparse numerical representations
+where only non-zero values are stored, making them efficient for high-dimensional spaces.
+
+Properties
+
+  Optional name identifier for the embedding function
+
+Methods
+
+`buildFromConfig()`, `generate()`, `generateForQueries()`, `getConfig()`, `validateConfig()`, `validateConfigUpdate()`

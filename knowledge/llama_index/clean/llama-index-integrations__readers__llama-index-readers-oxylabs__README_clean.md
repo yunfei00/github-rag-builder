@@ -1,0 +1,54 @@
+---
+source: llama_index
+owner: run-llama
+repo: llama_index
+path: llama-index-integrations/readers/llama-index-readers-oxylabs/README.md
+url: https://github.com/run-llama/llama_index/blob/main/llama-index-integrations/readers/llama-index-readers-oxylabs/README.md
+---
+# LlamaIndex Oxylabs Reader Integration
+
+Use Oxylabs Reader to load the data from search engines, e-commerce sites, travel platforms, and any other website.
+For more information checkout out the Oxylabs documentation.
+
+## Instructions for OxylabsReader
+
+### Setup and Installation
+
+Installation with `pip`
+
+```shell
+pip install llama-index-readers-oxylabs
+```
+
+Installation with `poetry`
+
+```shell
+poetry add llama-index-readers-oxylabs
+```
+
+Installation with `uv`
+
+```shell
+uv add llama-index-readers-oxylabs
+```
+
+### Get Oxylabs credentials
+
+Set up your Oxylabs account and get the username and password.
+
+### Using OxylabsReader
+
+```python
+from llama_index.readers.oxylabs import OxylabsGoogleSearchReader
+
+reader = OxylabsGoogleSearchReader(
+    username="OXYLABS_USERNAME",
+    password="OXYLABS_PASSWORD",
+)
+
+docs = reader.load_data(
+    {"query": "Iphone 16", "parse": True, "geo_location": "Berlin, Germany"}
+)
+
+print(docs[0].text)
+```

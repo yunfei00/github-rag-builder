@@ -1,0 +1,38 @@
+---
+source: llama_index
+owner: run-llama
+repo: llama_index
+path: llama-index-integrations/vector_stores/llama-index-vector-stores-yugabytedb/README.md
+url: https://github.com/run-llama/llama_index/blob/main/llama-index-integrations/vector_stores/llama-index-vector-stores-yugabytedb/README.md
+---
+# YugabyteDB Vector Store
+
+A LlamaIndex vector store using YugabyteDB as the backend.
+
+## Usage
+
+Pre-requisite:
+
+```bash
+pip install llama-index-vector-stores-yugabytedb
+```
+
+A minimal example:
+
+```python
+from llama_index.vector_stores.yugabytedb import YBVectorStore
+
+vector_store = YBVectorStore.from_params(
+    host="localhost",
+    user="yugabyte",
+    password="yugabyte",
+    port=5433,
+    load_balance="True",
+    database="yugabyte",
+    table_name="test_table",
+    schema_name="test_schema",
+    embed_dim=1536,
+)
+```
+
+> **Note**: Please see the YugabyteDB psycopg2 driver documentation for more yugabytedb specific parameters here.

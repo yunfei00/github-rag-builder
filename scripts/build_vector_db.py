@@ -57,6 +57,8 @@ def main():
         text_for_embedding = f"""Project: {source}
 File: {file}
 Title: {title}
+Repo: {item.get("repo", "")}
+Path: {item.get("path", file)}
 
 {content}
 """
@@ -69,6 +71,9 @@ Title: {title}
             "file": file,
             "title": title,
             "chunk_id": item["chunk_id"],
+            "repo": item.get("repo", ""),
+            "path": item.get("path", file),
+            "url": item.get("url", ""),
         })
 
     embeddings = model.encode(

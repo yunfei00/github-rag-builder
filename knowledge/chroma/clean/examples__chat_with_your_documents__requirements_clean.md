@@ -1,0 +1,10 @@
+---
+source: chroma
+owner: chroma-core
+repo: chroma
+path: examples/chat_with_your_documents/requirements.txt
+url: https://github.com/chroma-core/chroma/blob/main/examples/chat_with_your_documents/requirements.txt
+---
+chromadb>=0.5.16
+openai
+tqdm

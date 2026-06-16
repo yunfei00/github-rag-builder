@@ -1,0 +1,11 @@
+---
+source: firecrawl
+owner: firecrawl
+repo: firecrawl
+path: examples/o4-mini-web-crawler/requirements.txt
+url: https://github.com/firecrawl/firecrawl/blob/main/examples/o4-mini-web-crawler/requirements.txt
+---
+
+firecrawl==1.0.0
+openai==1.16.0
+python-dotenv==1.0.0 

@@ -1,0 +1,12 @@
+---
+source: firecrawl
+owner: firecrawl
+repo: firecrawl
+path: examples/gpt-4.1-company-researcher/requirements.txt
+url: https://github.com/firecrawl/firecrawl/blob/main/examples/gpt-4.1-company-researcher/requirements.txt
+---
+python-dotenv==1.0.1
+requests==2.32.4
+serpapi-python==0.1.5
+openai==1.12.0
+firecrawl==0.1.2

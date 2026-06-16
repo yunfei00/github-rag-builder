@@ -1,0 +1,12 @@
+---
+source: firecrawl
+owner: firecrawl
+repo: firecrawl
+path: examples/gemini-2.5-crawler/requirements.txt
+url: https://github.com/firecrawl/firecrawl/blob/main/examples/gemini-2.5-crawler/requirements.txt
+---
+google-cloud-aiplatform>=1.36.0
+google-generativeai>=0.3.2
+python-dotenv>=1.0.0
+requests>=2.31.0
+firecrawl>=0.1.0

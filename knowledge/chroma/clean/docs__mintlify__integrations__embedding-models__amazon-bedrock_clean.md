@@ -1,0 +1,32 @@
+---
+source: chroma
+owner: chroma-core
+repo: chroma
+path: docs/mintlify/integrations/embedding-models/amazon-bedrock.mdx
+url: https://github.com/chroma-core/chroma/blob/main/docs/mintlify/integrations/embedding-models/amazon-bedrock.mdx
+---
+---
+title: "Amazon Bedrock"
+---
+
+import { Callout } from '/snippets/callout.mdx';
+
+This embedding function relies on the boto3 python package, which you can install with pip install boto3.
+
+```python Python
+import boto3
+from chromadb.utils.embedding_functions import AmazonBedrockEmbeddingFunction
+
+session = boto3.Session(profile_name="profile", region_name="us-east-1")
+bedrock_ef = AmazonBedrockEmbeddingFunction(
+    session=session,
+    model_name="amazon.titan-embed-text-v1"
+)
+
+texts = ["Hello, world!", "How are you?"]
+embeddings = bedrock_ef(texts)
+```
+
+You can pass in an optional model\_name argument, which lets you choose which Amazon Bedrock embedding model to use. By default, Chroma uses amazon.titan-embed-text-v1.
+
+Visit Amazon Bedrock documentation for more information on available models and configuration.

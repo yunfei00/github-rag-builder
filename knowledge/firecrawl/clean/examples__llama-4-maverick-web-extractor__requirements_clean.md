@@ -1,0 +1,11 @@
+---
+source: firecrawl
+owner: firecrawl
+repo: firecrawl
+path: examples/llama-4-maverick-web-extractor/requirements.txt
+url: https://github.com/firecrawl/firecrawl/blob/main/examples/llama-4-maverick-web-extractor/requirements.txt
+---
+together>=0.2.5
+python-dotenv>=1.0.0
+requests>=2.31.0
+google-search-results>=2.4.2

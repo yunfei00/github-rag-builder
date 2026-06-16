@@ -1,0 +1,100 @@
+---
+source: chroma
+owner: chroma-core
+repo: chroma
+path: docs/mintlify/guides/performance/distributed.mdx
+url: https://github.com/chroma-core/chroma/blob/main/docs/mintlify/guides/performance/distributed.mdx
+---
+---
+title: Distributed/Cloud Performance
+description: How to think about performance in distributed Chroma deployments.
+---
+
+## Sharding
+
+Distributed Chroma shards data across collections. Individual collections have
+isolated cold starts and rate limits, which prevents the workload of one
+collection from interfering with the workload of another.
+
+If you have data that can be sharded, you are strongly encouraged to do so. It
+will usually cost less and perform better. For example, if an AI platform is
+using Chroma to store customers' isolated knowledge bases, it should put each
+customer's data in its own collection.
+
+## Indexes
+
+By default, Chroma builds indexes for all data, including full-text and regex
+search on the document, as well as inverted indexes on all metadata values.
+These indexes add overhead when writing to Chroma.
+
+If you are not using FTS or regex, or if you are not filtering by a metadata
+value, you can disable these indexes using the
+Schema.
+
+## Batch Deletes
+
+Chroma lets you delete an unbounded number of documents satisfying a `Where` filter. 
+
+```python Python
+collection.delete(
+	where={"chapter": "20"}
+)
+```
+
+```typescript TypeScript
+await collection.delete({
+    where: {"chapter": "20"} //where
+})
+```
+
+```rust Rust
+use chroma::types::{MetadataComparison, MetadataExpression, MetadataValue, PrimitiveOperator, Where};
+
+let where_clause = Where::Metadata(MetadataExpression {
+    key: "chapter".to_string(),
+    comparison: MetadataComparison::Primitive(
+        PrimitiveOperator::Equal,
+        MetadataValue::Str("20".to_string()),
+    ),
+});
+
+collection.delete(
+    None,               // ids: Option>
+    Some(where_clause), // r#where: Option
+).await?;
+```
+
+This can be a costly operation if the collection size is large. Add a limit clause to delete the documents
+in batches in order to not affect the latency of other operations.
+
+```python Python
+collection.delete(
+	where={"chapter": "20"},
+  limit=10000,
+)
+```
+
+```typescript TypeScript
+await collection.delete({
+    where: {"chapter": "20"},
+    limit: 10000,
+})
+```
+
+```rust Rust
+use chroma::types::{MetadataComparison, MetadataExpression, MetadataValue, PrimitiveOperator, Where};
+
+let where_clause = Where::Metadata(MetadataExpression {
+    key: "chapter".to_string(),
+    comparison: MetadataComparison::Primitive(
+        PrimitiveOperator::Equal,
+        MetadataValue::Str("20".to_string()),
+    ),
+});
+
+collection.delete(
+    None,               // ids: Option>
+    Some(where_clause), // r#where: Option
+    Some(10000),        // limit: Option
+).await?;
+```

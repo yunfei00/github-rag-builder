@@ -16,3 +16,46 @@ retriever:
 
 knowledge:
   file: ./knowledge/knowledge_all.json
+
+github_repos:
+  user_repos:
+    - owner: yunfei00
+      repo: github-rag-builder
+      source: github_rag_builder
+
+    - owner: yunfei00
+      repo: nfs-scanner
+      source: nfs_scanner
+
+    - owner: yunfei00
+      repo: noise-source-identification
+      source: noise_source_identification
+
+    - owner: yunfei00
+      repo: wechat-24-game
+      source: wechat_24_game
+
+  external_repos:
+    - owner: langchain-ai
+      repo: langchain
+      source: langchain
+
+    - owner: langgenius
+      repo: dify
+      source: dify
+
+    - owner: firecrawl
+      repo: firecrawl
+      source: firecrawl
+
+    - owner: run-llama
+      repo: llama_index
+      source: llama_index
+
+    - owner: chroma-core
+      repo: chroma
+      source: chroma
+
+    - owner: microsoft
+      repo: autogen
+      source: autogen
