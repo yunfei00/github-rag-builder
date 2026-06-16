@@ -1,0 +1,184 @@
+[
+  {
+    "chunk_id": "dify_001",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Quick start",
+    "content": "> Before installing Dify, make sure your machine meets the following minimum system requirements:\n>\n> - CPU >= 2 Core\n> - RAM >= 4 GiB\n\n\n\nThe easiest way to start the Dify server is through [Docker Compose](docker/docker-compose.yaml). Before running Dify with the following commands, make sure that [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) are installed on your machine:\n\n```bash\ncd dify\ncd docker\ncp .env.example .env\ndocker compose up -d\n```\n\nAfter running, you can access the Dify dashboard in your browser at [http://localhost/install](http://localhost/install) and start the initialization process.\n\n#### Seeking help\n\nPlease refer to our [FAQ](https://docs.dify.ai/getting-started/install-self-hosted/faqs) if you encounter problems setting up Dify. Reach out to [the community and us](#community--contact) if you are still having issues.\n\n> If you'd like to contribute to Dify or do additional development, refer to our [guide to deploying from source code](https://docs.dify.ai/getting-started/install-self-hosted/local-source-code)"
+  },
+  {
+    "chunk_id": "dify_002",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Key features",
+    "content": "**1. Workflow**:\nBuild and test powerful AI workflows on a visual canvas, leveraging all the following features and beyond.\n\n**2. Comprehensive model support**:\nSeamless integration with hundreds of proprietary / open-source LLMs from dozens of inference providers and self-hosted solutions, covering GPT, Mistral, Llama3, and any OpenAI API-compatible models. A full list of supported model providers can be found [here](https://docs.dify.ai/getting-started/readme/model-providers).\n\n\n\n**3. Prompt IDE**:\nIntuitive interface for crafting prompts, comparing model performance, and adding additional features such as text-to-speech to a chat-based app.\n\n**4. RAG Pipeline**:\nExtensive RAG capabilities that cover everything from document ingestion to retrieval, with out-of-box support for text extraction from PDFs, PPTs, and other common document formats.\n\n**5. Agent capabilities**:\nYou can define agents based on LLM Function Calling or ReAct, and add pre-built or custom tools for the agent. Dify provides 50+ built-in tools for AI agents, such as Google Search, DALL·E, Stable Diffusion and WolframAlpha.\n\n**6. LLMOps**:\nMonitor and analyze application logs and performance over time. You could continuously improve prompts, datasets, and models based on production data and annotations.\n\n**7. Backend-as-a-Service**:\nAll of Dify's offerings come with corresponding APIs, so you could effortlessly integrate Dify into your own business logic."
+  },
+  {
+    "chunk_id": "dify_003",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Using Dify",
+    "content": "- **Cloud **\n  We host a [Dify Cloud](https://dify.ai) service for anyone to try with zero setup. It provides all the capabilities of the self-deployed version, and includes 200 free GPT-4 calls in the sandbox plan.\n\n- **Self-hosting Dify Community Edition**\n  Quickly get Dify running in your environment with this [starter guide](#quick-start).\n  Use our [documentation](https://docs.dify.ai) for further references and more in-depth instructions.\n\n- **Dify for enterprise / organizations**\n  We provide additional enterprise-centric features. [Send us an email](mailto:business@dify.ai?subject=%5BGitHub%5DBusiness%20License%20Inquiry) to discuss your enterprise needs. \n\n  > For startups and small businesses using AWS, check out [Dify Premium on AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-t22mebxzwjhu6) and deploy it to your own AWS VPC with one click. It's an affordable AMI offering with the option to create apps with custom logo and branding."
+  },
+  {
+    "chunk_id": "dify_004",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Staying ahead",
+    "content": "Star Dify on GitHub and be instantly notified of new releases."
+  },
+  {
+    "chunk_id": "dify_005",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Advanced Setup",
+    "content": "### Custom configurations\n\nIf you need to customize the configuration, edit `docker/.env`. The essential startup defaults live in [`docker/.env.example`](docker/.env.example), and optional advanced variables are split under `docker/envs/` by theme. After making any changes, re-run `docker compose up -d` from the `docker` directory. You can find the full list of available environment variables [here](https://docs.dify.ai/getting-started/install-self-hosted/environments).\n\n### Metrics Monitoring with Grafana\n\nImport the dashboard to Grafana, using Dify's PostgreSQL database as data source, to monitor metrics in granularity of apps, tenants, messages, and more.\n\n- [Grafana Dashboard by @bowenliang123](https://github.com/bowenliang123/dify-grafana-dashboard)\n\n### Deployment with Kubernetes\n\nIf you'd like to configure a highly available setup, there are community-contributed [Helm Charts](https://helm.sh/) and YAML files which allow Dify to be deployed on Kubernetes.\n\n- [Helm Chart by @LeoQuote](https://github.com/douban/charts/tree/master/charts/dify)\n- [Helm Chart by @BorisPolonsky](https://github.com/BorisPolonsky/dify-helm)\n- [Helm Chart by @magicsong](https://github.com/magicsong/ai-charts)\n- [YAML file by @Winson-030](https://github.com/Winson-030/dify-kubernetes)\n- [YAML file by @wyy-holding](https://github.com/wyy-holding/dify-k8s)\n- [🚀 NEW! YAML files (Supports Dify v1.6.0) by @Zhoneym](https://github.com/Zhoneym/DifyAI-Kubernetes)\n\n#### Using Terraform for Deployment\n\nDeploy Dify to Cloud Platform with a single click using [terraform](https://www.terraform.io/)\n\n##### Azure Global\n\n- [Azure Terraform by @nikawang](https://github.com/nikawang/dify-azure-terraform)\n\n##### Google Cloud\n\n- [Google Cloud Terraform by @sotazum](https://github.com/DeNA/dify-google-cloud-terraform)\n\n#### Using AWS CDK for Deployment\n\nDeploy Dify to AWS with [CDK](https://aws.amazon.com/cdk/)\n\n##### AWS\n\n- [AWS CDK by @KevinZhao (EKS based)](https://github.com/aws-samples/solution-for-deploying-dify-on-aws)\n- [AWS CDK by @tmokmss (ECS based)](https://github.com/aws-samples/dify-self-hosted-on-aws)\n\n#### Using Alibaba Cloud Computing Nest\n\nQuickly deploy Dify to Alibaba cloud with [Alibaba Cloud Computing Nest](https://computenest.console.aliyun.com/service/instance/create/default?type=user&ServiceName=Dify%E7%A4%BE%E5%8C%BA%E7%89%88)\n\n#### Using Alibaba Cloud Data Management\n\nOne-Click deploy Dify to Alibaba Cloud with [Alibaba Cloud Data Management](https://www.alibabacloud.com/help/en/dms/dify-in-invitational-preview/)\n\n#### Deploy to AKS with Azure Devops Pipeline\n\nOne-Click deploy Dify to AKS with [Azure Devops Pipeline Helm Chart by @LeoZhang](https://github.com/Ruiruiz30/Dify-helm-chart-AKS)"
+  },
+  {
+    "chunk_id": "dify_006",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Contributing",
+    "content": "For those who'd like to contribute code, see our [Contribution Guide](https://github.com/langgenius/dify/blob/main/CONTRIBUTING.md).\nAt the same time, please consider supporting Dify by sharing it on social media and at events and conferences.\n\n> We are looking for contributors to help translate Dify into languages other than Mandarin or English. If you are interested in helping, please see the [i18n README](https://github.com/langgenius/dify/blob/main/web/i18n-config/README.md) for more information, and leave us a comment in the `global-users` channel of our [Discord Community Server](https://discord.gg/8Tpq4AcN9c)."
+  },
+  {
+    "chunk_id": "dify_007",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Community & contact",
+    "content": "- [GitHub Discussion](https://github.com/langgenius/dify/discussions). Best for: sharing feedback and asking questions.\n- [GitHub Issues](https://github.com/langgenius/dify/issues). Best for: bugs you encounter using Dify.AI, and feature proposals. See our [Contribution Guide](https://github.com/langgenius/dify/blob/main/CONTRIBUTING.md).\n- [Discord](https://discord.gg/FngNHpbcY7). Best for: sharing your applications and hanging out with the community.\n- [X(Twitter)](https://twitter.com/dify_ai). Best for: sharing your applications and hanging out with the community.\n\n**Contributors**"
+  },
+  {
+    "chunk_id": "dify_008",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Star history",
+    "content": "[](https://star-history.com/#langgenius/dify&Date)"
+  },
+  {
+    "chunk_id": "dify_009",
+    "source": "dify",
+    "file": "README.md",
+    "title": "Security disclosure",
+    "content": "To protect your privacy, please avoid posting security issues on GitHub. Instead, report issues to security@dify.ai, and our team will respond with detailed answer."
+  },
+  {
+    "chunk_id": "dify_010",
+    "source": "dify",
+    "file": "README.md",
+    "title": "License",
+    "content": "This repository is licensed under the [Dify Open Source License](LICENSE), based on Apache 2.0 with additional conditions."
+  },
+  {
+    "chunk_id": "firecrawl_001",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Why Firecrawl?",
+    "content": "- **Industry-leading reliability**: Covers 96% of the web, including JS-heavy pages — no proxy headaches, just clean data ([see benchmarks](https://www.firecrawl.dev/blog/the-worlds-best-web-data-api-v25))\n- **Blazingly fast**: P95 latency of 3.4s across millions of pages, built for real-time agents and dynamic apps\n- **LLM-ready output**: Clean markdown, structured JSON, screenshots, and more — spend fewer tokens, build better AI apps\n- **We handle the hard stuff**: Rotating proxies, orchestration, rate limits, JS-blocked content, and more — zero configuration\n- **Agent ready**: Connect Firecrawl to any AI agent or MCP client with a single command\n- **Media parsing**: Parse and extract content from web-hosted PDFs, DOCX, and more\n- **Actions**: Click, scroll, write, wait, and press before extracting content\n- **Open source**: Developed transparently and collaboratively — [join our community](https://github.com/firecrawl/firecrawl)\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_002",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Feature Overview",
+    "content": "**Core Endpoints**\n\n| Feature | Description |\n|---------|-------------|\n| [**Search**](#search) | Search the web and get full page content from results |\n| [**Scrape**](#scrape) | Convert any URL to markdown, HTML, screenshots, or structured JSON |\n| [**Interact**](#interact) | Scrape a page, then interact with it using AI prompts or code |\n\n**More**\n\n| Feature | Description |\n|---------|-------------|\n| [**Agent**](#agent) | Automated data gathering, just describe what you need |\n| [**Crawl**](#crawl) | Scrape all URLs of a website with a single request |\n| [**Map**](#map) | Discover all URLs on a website instantly |\n| [**Batch Scrape**](#batch-scrape) | Scrape thousands of URLs asynchronously |\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_003",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Quick Start",
+    "content": "Sign up at [firecrawl.dev](https://firecrawl.dev) to get your API key. Try the [playground](https://firecrawl.dev/playground) to test it out.\n\n### Search\n\nSearch the web and get full content from results.\n\n```python\nfrom firecrawl import Firecrawl\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\nsearch_result = app.search(\"firecrawl\", limit=5)\n```\n\n\nNode.js / cURL / CLI\n\n**Node.js**\n```javascript\nimport { Firecrawl } from 'firecrawl';\n\nconst app = new Firecrawl({apiKey: \"fc-YOUR_API_KEY\"});\n\napp.search(\"firecrawl\", { limit: 5 })\n```\n\n**cURL**\n```bash\ncurl -X POST 'https://api.firecrawl.dev/v2/search' \\\n-H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n-H 'Content-Type: application/json' \\\n-d '{\n  \"query\": \"firecrawl\",\n  \"limit\": 5\n}'\n```\n\n**CLI**\n```bash\nfirecrawl search \"firecrawl\" --limit 5\n```\n\n\nOutput:\n```json\n[\n  {\n    \"url\": \"https://firecrawl.dev\",\n    \"title\": \"Firecrawl\",\n    \"markdown\": \"Turn websites into...\"\n  },\n  {\n    \"url\": \"https://docs.firecrawl.dev\",\n    \"title\": \"Firecrawl Docs\",\n    \"markdown\": \"# Getting Started...\"\n  }\n]\n```\n\n### Scrape\n\nGet LLM-ready data from any website — markdown, JSON, screenshots, and more.\n\n```python\nfrom firecrawl import Firecrawl\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\nresult = app.scrape('firecrawl.dev')\n```\n\n\nNode.js / cURL / CLI\n\n**Node.js**\n```javascript\nimport { Firecrawl } from 'firecrawl';\n\nconst app = new Firecrawl({ apiKey: \"fc-YOUR_API_KEY\" });\n\napp.scrape('firecrawl.dev')\n```\n\n**cURL**\n```bash\ncurl -X POST 'https://api.firecrawl.dev/v2/scrape' \\\n-H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n-H 'Content-Type: application/json' \\\n-d '{\n  \"url\": \"firecrawl.dev\"\n}'\n```\n\n**CLI**\n```bash\nfirecrawl scrape https://firecrawl.dev\nfirecrawl https://firecrawl.dev --only-main-content\n```\n\n\nOutput:\n```\n# Firecrawl\n\nFirecrawl helps AI systems search, scrape, and interact with the web."
+  },
+  {
+    "chunk_id": "firecrawl_004",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Features",
+    "content": "- Search: Find information across the web\n- Scrape: Clean data from any page\n- Interact: Click, navigate, and operate pages\n- Agent: Autonomous data gathering\n```\n\n### Interact\n\nScrape a page, then interact with it using AI prompts or code.\n\n```python\nfrom firecrawl import Firecrawl\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\nresult = app.scrape(\"https://amazon.com\")\nscrape_id = result.metadata.scrape_id\n\napp.interact(scrape_id, prompt=\"Search for 'mechanical keyboard'\")\napp.interact(scrape_id, prompt=\"Click the first result\")\n```\n\n\nNode.js / cURL / CLI\n\n**Node.js**\n```javascript\nimport { Firecrawl } from 'firecrawl';\n\nconst app = new Firecrawl({apiKey: \"fc-YOUR_API_KEY\"});\n\nconst result = await app.scrape(\"https://amazon.com\");\n\nawait app.interact(result.metadata.scrapeId, {\n  prompt: \"Search for 'mechanical keyboard'\"\n});\nawait app.interact(result.metadata.scrapeId, {\n  prompt: \"Click the first result\"\n});\n```\n\n**cURL**\n```bash\n# 1. Scrape the page\ncurl -X POST 'https://api.firecrawl.dev/v2/scrape' \\\n-H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n-H 'Content-Type: application/json' \\\n-d '{\"url\": \"https://amazon.com\"}'\n\n# 2. Interact with the page (use scrapeId from step 1)\ncurl -X POST 'https://api.firecrawl.dev/v2/scrape/SCRAPE_ID/interact' \\\n-H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n-H 'Content-Type: application/json' \\\n-d '{\"prompt\": \"Search for mechanical keyboard\"}'\n```\n\n**CLI**\n```bash\nfirecrawl scrape https://amazon.com\nfirecrawl interact exec --prompt \"Search for 'mechanical keyboard'\"\nfirecrawl interact exec --prompt \"Click the first result\"\n```\n\n\nOutput:\n```json\n{\n  \"success\": true,\n  \"output\": \"Keyboard available at $100\",\n  \"liveViewUrl\": \"https://liveview.firecrawl.dev/...\"\n}\n```\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_005",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Power Your Agent",
+    "content": "Connect Firecrawl to any AI agent or MCP client in minutes.\n\n### Skill\n\nGive your agent easy access to real-time web data with one command.\n\n```bash\nnpx -y firecrawl-cli@latest init --all --browser\n```\n\nRestart your agent after installing. Works with [Claude Code](https://claude.ai/code), [Antigravity](https://antigravity.google), [OpenCode](https://opencode.ai), and more.\n\n### MCP\n\nConnect any MCP-compatible client to the web in seconds.\n\n```json\n{\n  \"mcpServers\": {\n    \"firecrawl-mcp\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"firecrawl-mcp\"],\n      \"env\": {\n        \"FIRECRAWL_API_KEY\": \"fc-YOUR_API_KEY\"\n      }\n    }\n  }\n}\n```\n\n### Agent Onboarding\n\nAre you an AI agent? Fetch this skill to sign up your user, get an API key, and start building with Firecrawl.\n\n```bash\ncurl -s https://firecrawl.dev/agent-onboarding/SKILL.md\n```\n\nSee the [Skill + CLI documentation](https://docs.firecrawl.dev/sdks/cli) for all available commands. For MCP, see [firecrawl-mcp-server](https://github.com/firecrawl/firecrawl-mcp-server).\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_006",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "More Endpoints",
+    "content": "### Agent\n\n**The easiest way to get data from the web.** Describe what you need, and our AI agent searches, navigates, and retrieves it. No URLs required.\n\nAgent is the evolution of our `/extract` endpoint: faster, more reliable, and doesn't require you to know the URLs upfront.\n```bash\ncurl -X POST 'https://api.firecrawl.dev/v2/agent' \\\n  -H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"prompt\": \"Find the pricing plans for Notion\"\n  }'\n```\n\nResponse:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"result\": \"Notion offers the following pricing plans:\\n\\n1. Free - $0/month...\\n2. Plus - $10/seat/month...\\n3. Business - $18/seat/month...\",\n    \"sources\": [\"https://www.notion.so/pricing\"]\n  }\n}\n```\n\n#### Agent with Structured Output\n\nUse a schema to get structured data:\n```python\nfrom firecrawl import Firecrawl\nfrom pydantic import BaseModel, Field\nfrom typing import List, Optional\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\nclass Founder(BaseModel):\n    name: str = Field(description=\"Full name of the founder\")\n    role: Optional[str] = Field(None, description=\"Role or position\")\n\nclass FoundersSchema(BaseModel):\n    founders: List[Founder] = Field(description=\"List of founders\")\n\nresult = app.agent(\n    prompt=\"Find the founders of Firecrawl\",\n    schema=FoundersSchema\n)\n\nprint(result.data)\n```\n```json\n{\n  \"founders\": [\n    {\"name\": \"Eric Ciarla\", \"role\": \"Co-founder\"},\n    {\"name\": \"Nicolas Camara\", \"role\": \"Co-founder\"},\n    {\"name\": \"Caleb Peffer\", \"role\": \"Co-founder\"}\n  ]\n}\n```\n\n#### Agent with URLs (Optional)\n\nFocus the agent on specific pages:\n```python\nresult = app.agent(\n    urls=[\"https://docs.firecrawl.dev\", \"https://firecrawl.dev/pricing\"],\n    prompt=\"Compare the features and pricing information\"\n)\n```\n\n#### Model Selection\n\nChoose between two models based on your needs:\n\n| Model | Cost | Best For |\n|-------|------|----------|\n| `spark-1-mini` (default) | 60% cheaper | Most tasks |\n| `spark-1-pro` | Standard | Complex research, critical data gathering |\n```python\nresult = app.agent(\n    prompt=\"Compare enterprise features across Firecrawl, Apify, and ScrapingBee\",\n    model=\"spark-1-pro\"\n)\n```\n\n\n**When to use Pro:**\n- Comparing data across multiple websites\n- Extracting from sites with complex navigation or auth\n- Research tasks where the agent needs to explore multiple paths\n- Critical data where accuracy is paramount\n\nLearn more about Spark models in our [Agent documentation](https://docs.firecrawl.dev/features/agent).\n\n### Crawl\n\nCrawl an entire website and get content from all pages.\n```bash\ncurl -X POST 'https://api.firecrawl.dev/v2/crawl' \\\n  -H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"url\": \"https://docs.firecrawl.dev\",\n    \"limit\": 100,\n    \"scrapeOptions\": {\n      \"formats\": [\"markdown\"]\n    }\n  }'\n```\n\nReturns a job ID:\n```json\n{\n  \"success\": true,\n  \"id\": \"123-456-789\",\n  \"url\": \"https://api.firecrawl.dev/v2/crawl/123-456-789\"\n}\n```\n\n#### Check Crawl Status\n```bash\ncurl -X GET 'https://api.firecrawl.dev/v2/crawl/123-456-789' \\\n  -H 'Authorization: Bearer fc-YOUR_API_KEY'\n```\n```json\n{\n  \"status\": \"completed\",\n  \"total\": 50,\n  \"completed\": 50,\n  \"creditsUsed\": 50,\n  \"data\": [\n    {\n      \"markdown\": \"# Page Title\\n\\nContent...\",\n      \"metadata\": {\"title\": \"Page Title\", \"sourceURL\": \"https://...\"}\n    }\n  ]\n}\n```\n\n**Note:** The [SDKs](#sdks) handle polling automatically for a better developer experience.\n\n### Map\n\nDiscover all URLs on a website instantly.\n```bash\ncurl -X POST 'https://api.firecrawl.dev/v2/map' \\\n  -H 'Authorization: Bearer fc-YOUR_API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"url\": \"https://firecrawl.dev\"}'\n```\n\nResponse:\n```json\n{\n  \"success\": true,\n  \"links\": [\n    {\"url\": \"https://firecrawl.dev\", \"title\": \"Firecrawl\", \"description\": \"Turn websites into LLM-ready data\"},\n    {\"url\": \"https://firecrawl.dev/pricing\", \"title\": \"Pricing\", \"description\": \"Firecrawl pricing plans\"},\n    {\"url\": \"https://firecrawl.dev/blog\", \"title\": \"Blog\", \"description\": \"Firecrawl blog\"}\n  ]\n}\n```\n\n#### Map with Search\n\nFind specific URLs within a site:\n```python\nfrom firecrawl import Firecrawl\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\nresult = app.map(\"https://firecrawl.dev\", search=\"pricing\")\n# Returns URLs ordered by relevance to \"pricing\"\n```\n\n### Batch Scrape\n\nScrape multiple URLs at once:\n```python\nfrom firecrawl import Firecrawl\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\njob = app.batch_scrape([\n    \"https://firecrawl.dev\",\n    \"https://docs.firecrawl.dev\",\n    \"https://firecrawl.dev/pricing\"\n], formats=[\"markdown\"])\n\nfor doc in job.data:\n    print(doc.metadata.source_url)\n```\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_007",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "SDKs",
+    "content": "Our SDKs provide a convenient way to use all Firecrawl features and automatically handle polling for async operations.\n\n### Python\n\nInstall the SDK:\n```bash\npip install firecrawl-py\n```\n```python\nfrom firecrawl import Firecrawl\n\napp = Firecrawl(api_key=\"fc-YOUR_API_KEY\")\n\n# Scrape a single URL\ndoc = app.scrape(\"https://firecrawl.dev\", formats=[\"markdown\"])\nprint(doc.markdown)\n\n# Use the Agent for autonomous data gathering\nresult = app.agent(prompt=\"Find the founders of Stripe\")\nprint(result.data)\n\n# Crawl a website (automatically waits for completion)\ndocs = app.crawl(\"https://docs.firecrawl.dev\", limit=50)\nfor doc in docs.data:\n    print(doc.metadata.source_url, doc.markdown[:100])\n\n# Search the web\nresults = app.search(\"best AI data tools 2024\", limit=10)\nprint(results)\n```\n\n### Node.js\n\nInstall the SDK:\n```bash\nnpm install firecrawl\n```\n```javascript\nimport { Firecrawl } from 'firecrawl';\n\nconst app = new Firecrawl({ apiKey: 'fc-YOUR_API_KEY' });\n\n// Scrape a single URL\nconst doc = await app.scrape('https://firecrawl.dev', { formats: ['markdown'] });\nconsole.log(doc.markdown);\n\n// Use the Agent for autonomous data gathering\nconst result = await app.agent({ prompt: 'Find the founders of Stripe' });\nconsole.log(result.data);\n\n// Crawl a website (automatically waits for completion)\nconst docs = await app.crawl('https://docs.firecrawl.dev', { limit: 50 });\ndocs.data.forEach(doc => {\n    console.log(doc.metadata.sourceURL, doc.markdown.substring(0, 100));\n});\n\n// Search the web\nconst results = await app.search('best AI data tools 2024', { limit: 10 });\nresults.data.web.forEach(result => {\n    console.log(`${result.title}: ${result.url}`);\n});\n```\n\n### Java\n\nAdd the dependency ([Gradle/Maven](https://docs.firecrawl.dev/sdks/java#installation)):\n```groovy\nrepositories {\n    mavenCentral()\n    maven { url 'https://jitpack.io' }\n}\n\ndependencies {\n    implementation 'com.github.firecrawl:firecrawl-java-sdk:2.0'\n}\n```\n```java\nimport dev.firecrawl.client.FirecrawlClient;\nimport dev.firecrawl.model.*;\n\nFirecrawlClient client = new FirecrawlClient(\n    System.getenv(\"FIRECRAWL_API_KEY\"), null, null\n);\n\n// Scrape a single URL\nScrapeParams scrapeParams = new ScrapeParams();\nscrapeParams.setFormats(new String[]{\"markdown\"});\nFirecrawlDocument doc = client.scrapeURL(\"https://firecrawl.dev\", scrapeParams);\nSystem.out.println(doc.getMarkdown());\n\n// Use the Agent for autonomous data gathering\nAgentParams agentParams = new AgentParams(\"Find the founders of Stripe\");\nAgentResponse start = client.createAgent(agentParams);\nAgentStatusResponse result = client.getAgentStatus(start.getId());\nSystem.out.println(result.getData());\n\n// Crawl a website (polls until completion)\nCrawlParams crawlParams = new CrawlParams();\ncrawlParams.setLimit(50);\nCrawlStatusResponse job = client.crawlURL(\"https://docs.firecrawl.dev\", crawlParams, null, 10);\nfor (FirecrawlDocument page : job.getData()) {\n    System.out.println(page.getMetadata().get(\"sourceURL\"));\n}\n\n// Search the web\nSearchParams searchParams = new SearchParams(\"best AI data tools 2024\");\nsearchParams.setLimit(10);\nSearchResponse results = client.search(searchParams);\nfor (SearchResult r : results.getResults()) {\n    System.out.println(r.getTitle() + \": \" + r.getUrl());\n}\n```\n\n### Elixir\n\nAdd the dependency:\n```elixir\ndef deps do\n  [\n    {:firecrawl, \"~> 1.0\"}\n  ]\nend\n```\n```elixir\n# Scrape a URL\n{:ok, response} = Firecrawl.scrape_and_extract_from_url(\n  url: \"https://firecrawl.dev\",\n  formats: [\"markdown\"]\n)\n\n# Crawl a website\n{:ok, response} = Firecrawl.crawl_urls(\n  url: \"https://docs.firecrawl.dev\",\n  limit: 50\n)\n\n# Search the web\n{:ok, response} = Firecrawl.search_and_scrape(\n  query: \"best AI data tools 2024\",\n  limit: 10\n)\n\n# Map URLs\n{:ok, response} = Firecrawl.map_urls(url: \"https://example.com\")\n```\n\n### Rust\n\nAdd the dependency:\n```toml\n[dependencies]\nfirecrawl = \"2\"\ntokio = { version = \"1\", features = [\"macros\", \"rt-multi-thread\"] }\n```\n```rust\nuse firecrawl::{Client, ScrapeOptions, Format, CrawlOptions};\n\n#[tokio::main]\nasync fn main() -> Result> {\n    let client = Client::new(\"fc-YOUR_API_KEY\")?;\n\n    // Scrape a URL\n    let document = client.scrape(\"https://firecrawl.dev\", None).await?;\n    println!(\"{:?}\", document.markdown);\n\n    // Crawl a website\n    let options = CrawlOptions {\n        limit: Some(50),\n        ..Default::default()\n    };\n    let result = client.crawl(\"https://docs.firecrawl.dev\", options).await?;\n    println!(\"Crawled {} pages\", result.data.len());\n\n    // Search the web\n    let response = client.search(\"best web scraping tools 2024\", None).await?;\n    println!(\"{:?}\", response.data);\n\n    Ok(())\n}\n```\n\n### Community SDKs\n\n- [Go SDK](https://github.com/firecrawl/firecrawl/tree/main/apps/go-sdk)\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_008",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Integrations",
+    "content": "**Agents & AI Tools**\n- [Firecrawl Skill](https://docs.firecrawl.dev/sdks/cli)\n- [Firecrawl CLI Skills](https://github.com/firecrawl/cli#agent-skills)\n- [Firecrawl Workflows](https://github.com/firecrawl/firecrawl-workflows)\n- [Firecrawl MCP](https://github.com/mendableai/firecrawl-mcp-server)\n\n**Platforms**\n- [Lovable](https://docs.lovable.dev/integrations/firecrawl)\n- [Zapier](https://zapier.com/apps/firecrawl/integrations)\n- [n8n](https://n8n.io/integrations/firecrawl/)\n\n[View all integrations →](https://www.firecrawl.dev/integrations)\n\n**Missing your favorite tool?** [Open an issue](https://github.com/mendableai/firecrawl/issues) and let us know!\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_009",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Resources",
+    "content": "- [Documentation](https://docs.firecrawl.dev)\n- [API Reference](https://docs.firecrawl.dev/api-reference/introduction)\n- [Playground](https://firecrawl.dev/playground)\n- [Changelog](https://firecrawl.dev/changelog)\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_010",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Open Source vs Cloud",
+    "content": "Firecrawl is open source under the AGPL-3.0 license. The cloud version at [firecrawl.dev](https://firecrawl.dev) includes additional features:\n\n\n\nTo run locally, see the [Contributing Guide](https://github.com/firecrawl/firecrawl/blob/main/CONTRIBUTING.md). To self-host, see [Self-Hosting Guide](https://docs.firecrawl.dev/contributing/self-host).\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_011",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "Contributing",
+    "content": "We love contributions! Please read our [Contributing Guide](https://github.com/firecrawl/firecrawl/blob/main/CONTRIBUTING.md) before submitting a pull request.\n\n### Contributors\n\n\n  \n\n\n---"
+  },
+  {
+    "chunk_id": "firecrawl_012",
+    "source": "firecrawl",
+    "file": "README.md",
+    "title": "License",
+    "content": "This project is primarily licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). The SDKs and some UI components are licensed under the MIT License. See the LICENSE files in specific directories for details.\n\n---\n\n**It is the sole responsibility of end users to respect websites' policies when scraping.** Users are advised to adhere to applicable privacy policies and terms of use. By default, Firecrawl respects robots.txt directives. By using Firecrawl, you agree to comply with these conditions.\n\n\n  \n    ↑ Back to Top ↑"
+  },
+  {
+    "chunk_id": "langchain_001",
+    "source": "langchain",
+    "file": "README.md",
+    "title": "Quickstart",
+    "content": "```bash\nuv add langchain\n```\n\n```python\nfrom langchain.chat_models import init_chat_model\n\nmodel = init_chat_model(\"openai:gpt-5.5\")\nresult = model.invoke(\"Hello, world!\")\n```\n\nIf you're looking for more advanced customization or agent orchestration, check out [LangGraph](https://github.com/langchain-ai/langgraph), our framework for building controllable agent workflows.\n\nFor an equivalent JS/TS library, check out [LangChain.js](https://github.com/langchain-ai/langchainjs).\n\n> [!TIP]\n> For developing, debugging, and deploying AI agents and LLM applications, see [LangSmith](https://docs.langchain.com/langsmith/home)."
+  },
+  {
+    "chunk_id": "langchain_002",
+    "source": "langchain",
+    "file": "README.md",
+    "title": "LangChain ecosystem",
+    "content": "While the LangChain framework can be used standalone, it also integrates seamlessly with any LangChain product, giving developers a full suite of tools when building LLM applications.\n\n- **[Deep Agents](http://docs.langchain.com/oss/python/deepagents/)** — Build agents that can plan, use subagents, and leverage file systems for complex tasks\n- **[LangGraph](https://docs.langchain.com/oss/python/langgraph/overview)** — Build agents that can reliably handle complex tasks with our low-level agent orchestration framework\n- **[Integrations](https://docs.langchain.com/oss/python/integrations/providers/overview)** — Chat & embedding models, tools & toolkits, and more\n- **[LangSmith](https://www.langchain.com/langsmith)** — Agent evals, observability, and debugging for LLM apps\n- **[LangSmith Deployment](https://docs.langchain.com/langsmith/deployments)** — Deploy and scale agents with a purpose-built platform for long-running, stateful workflows"
+  },
+  {
+    "chunk_id": "langchain_003",
+    "source": "langchain",
+    "file": "README.md",
+    "title": "Why use LangChain?",
+    "content": "LangChain helps developers build applications powered by LLMs through a standard interface for models, embeddings, vector stores, and more.\n\n- **Real-time data augmentation** — Easily connect LLMs to diverse data sources and external/internal systems, drawing from LangChain's vast library of integrations with model providers, tools, vector stores, retrievers, and more\n- **Model interoperability** — Swap models in and out as your engineering team experiments to find the best choice for your application's needs. As the industry frontier evolves, adapt quickly — LangChain's abstractions keep you moving without losing momentum\n- **Rapid prototyping** — Quickly build and iterate on LLM applications with LangChain's modular, component-based architecture. Test different approaches and workflows without rebuilding from scratch, accelerating your development cycle\n- **Production-ready features** — Deploy reliable applications with built-in support for monitoring, evaluation, and debugging through integrations like LangSmith. Scale with confidence using battle-tested patterns and best practices\n- **Vibrant community and ecosystem** — Leverage a rich ecosystem of integrations, templates, and community-contributed components. Benefit from continuous improvements and stay up-to-date with the latest AI developments through an active open-source community\n- **Flexible abstraction layers** — Work at the level of abstraction that suits your needs — from high-level chains for quick starts to low-level components for fine-grained control. LangChain grows with your application's complexity\n\n---"
+  },
+  {
+    "chunk_id": "langchain_004",
+    "source": "langchain",
+    "file": "README.md",
+    "title": "Resources",
+    "content": "- [Documentation](https://docs.langchain.com/oss/python/langchain/overview) — conceptual overviews and guides\n- [LangChain ecosystem overview](https://docs.langchain.com/oss/python/concepts/products) — how LangChain, LangGraph, and Deep Agents fit together\n- [API reference](https://reference.langchain.com/python) — complete reference for all public classes, functions, and types\n- [Discussions](https://forum.langchain.com/c/oss-product-help-lc-and-lg/langchain/14) — community forum for technical questions, ideas, and feedback\n- [LangChain Academy](https://academy.langchain.com/) — comprehensive, free courses on LangChain libraries and products, made by the LangChain team\n- [Contributing Guide](https://docs.langchain.com/oss/python/contributing/overview) — how to contribute and find good first issues\n- [Code of Conduct](https://github.com/langchain-ai/langchain/?tab=coc-ov-file) — community guidelines and standards"
+  }
+]

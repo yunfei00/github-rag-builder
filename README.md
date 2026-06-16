@@ -25,6 +25,14 @@ llm.api_key
 ## Build Vector DB
 
 ```bash
+python scripts/build_all_knowledge.py
+```
+
+```bash
+python scripts/stats.py
+```
+
+```bash
 python scripts/build_vector_db.py
 ```
 
