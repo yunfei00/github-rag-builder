@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -8,23 +7,22 @@ from sentence_transformers import SentenceTransformer
 
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DB_DIR = ROOT_DIR / "db" / "chroma"
-COLLECTION_NAME = "github_rag_knowledge"
-EMBEDDING_MODEL = "BAAI/bge-small-zh-v1.5"
-TOP_K = 3
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from src.config_loader import load_config, project_path
 
 
-def retrieve_chunks(question):
-    if not DB_DIR.exists():
-        raise RuntimeError(
-            f"Vector DB not found: {DB_DIR}. "
-            "Run `python scripts/build_vector_db.py` first."
-        )
+def retrieve_chunks(question, cfg):
+    embedding_model_path = project_path(cfg["embedding"]["model_path"])
+    vector_db_path = project_path(cfg["vector_db"]["path"])
+    collection_name = cfg["vector_db"]["collection"]
+    top_k = int(cfg["retriever"]["top_k"])
 
-    model = SentenceTransformer(EMBEDDING_MODEL)
+    model = SentenceTransformer(str(embedding_model_path))
 
-    client = chromadb.PersistentClient(path=str(DB_DIR))
-    collection = client.get_collection(name=COLLECTION_NAME)
+    client = chromadb.PersistentClient(path=str(vector_db_path))
+    collection = client.get_collection(name=collection_name)
 
     query_embedding = model.encode(
         [question],
@@ -33,22 +31,16 @@ def retrieve_chunks(question):
 
     results = collection.query(
         query_embeddings=query_embedding,
-        n_results=TOP_K
+        n_results=top_k
     )
 
-    ids = results.get("ids", [[]])[0]
-    documents = results.get("documents", [[]])[0]
-    metadatas = results.get("metadatas", [[]])[0]
-    distances = results.get("distances", [[]])[0]
-
     chunks = []
-    for index, chunk_id in enumerate(ids):
-        metadata = metadatas[index] if index < len(metadatas) else {}
+    for index, chunk_id in enumerate(results["ids"][0]):
         chunks.append({
             "id": chunk_id,
-            "document": documents[index] if index < len(documents) else "",
-            "metadata": metadata or {},
-            "distance": distances[index] if index < len(distances) else None,
+            "document": results["documents"][0][index],
+            "metadata": results["metadatas"][0][index],
+            "distance": results["distances"][0][index],
         })
 
     return chunks
@@ -59,16 +51,12 @@ def build_prompt(question, chunks):
 
     for index, chunk in enumerate(chunks, start=1):
         metadata = chunk["metadata"]
-        title = metadata.get("title", "")
-        source = metadata.get("source", "")
-        chunk_id = metadata.get("chunk_id", chunk["id"])
-
         context_blocks.append(
             f"资料{index}:\n"
-            f"标题: {title}\n"
-            f"来源: {source}\n"
-            f"Chunk ID: {chunk_id}\n\n"
-            f"{chunk['document']}"
+            f"标题：\n{metadata.get('title', '')}\n"
+            f"来源：\n{metadata.get('source', '')}\n"
+            f"文件：\n{metadata.get('file', '')}\n"
+            f"内容：\n{chunk['document']}"
         )
 
     context = "\n\n".join(context_blocks)
@@ -79,79 +67,66 @@ def build_prompt(question, chunks):
 
 {context}
 
-问题:
+问题：
 {question}
 
 要求：
 1. 只能依据资料回答
 2. 不允许编造
-3. 如果资料不足请明确说明
+3. 如果资料不足，请回答“资料中没有足够信息”
 4. 最后给出引用来源
 """
+
+
+def ask_llm(prompt, cfg):
+    client = OpenAI(
+        api_key=cfg["llm"]["api_key"],
+        base_url=cfg["llm"]["base_url"]
+    )
+
+    completion = client.chat.completions.create(
+        model=cfg["llm"]["model"],
+        messages=[
+            {
+                "role": "system",
+                "content": "你是一个严谨的知识库助手，只能依据提供的资料回答。",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.2
+    )
+
+    return completion.choices[0].message.content or ""
 
 
 def print_retrieved_chunks(chunks):
     print("Retrieved Chunks:")
 
-    if not chunks:
-        print("(none)")
-        return
-
     for index, chunk in enumerate(chunks, start=1):
         metadata = chunk["metadata"]
-        print()
-        print("=" * 50)
-        print(f"Chunk: {index}")
-        print(f"ID: {chunk['id']}")
-        if chunk["distance"] is not None:
-            print(f"Distance: {chunk['distance']}")
-        print(f"Title: {metadata.get('title', '')}")
-        print(f"Source: {metadata.get('source', '')}")
-        print("-" * 50)
-        print(chunk["document"])
-
-
-def ask_llm(prompt):
-    api_key = os.getenv("LLM_API_KEY")
-    base_url = os.getenv("LLM_BASE_URL")
-    model = os.getenv("LLM_MODEL")
-
-    if not api_key:
-        raise RuntimeError("Missing environment variable: LLM_API_KEY")
-
-    if not model:
-        raise RuntimeError("Missing environment variable: LLM_MODEL")
-
-    client = OpenAI(
-        api_key=api_key,
-        base_url=base_url
-    )
-
-    response = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.2
-    )
-
-    return response.choices[0].message.content or ""
+        print(
+            f"{index}. {metadata.get('title', '')} | "
+            f"{metadata.get('source', '')} | "
+            f"{metadata.get('file', '')}"
+        )
 
 
 def main():
+    try:
+        cfg = load_config()
+    except FileNotFoundError as exc:
+        print(f"Error: {exc}")
+        sys.exit(1)
+
     question = input("Question: ").strip()
 
     if not question:
         print("Question cannot be empty.")
         sys.exit(1)
 
-    try:
-        chunks = retrieve_chunks(question)
-    except RuntimeError as exc:
-        print(f"Error: {exc}")
-        sys.exit(1)
-
+    chunks = retrieve_chunks(question, cfg)
     prompt = build_prompt(question, chunks)
+    answer = ask_llm(prompt, cfg)
 
     print()
     print("Question:")
@@ -160,11 +135,7 @@ def main():
     print_retrieved_chunks(chunks)
     print()
     print("Answer:")
-    try:
-        print(ask_llm(prompt))
-    except RuntimeError as exc:
-        print(f"Error: {exc}")
-        sys.exit(1)
+    print(answer)
 
 
 if __name__ == "__main__":

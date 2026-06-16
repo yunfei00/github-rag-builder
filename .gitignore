@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project local artifacts
+config/config.yaml
+db/
+models/
+__pycache__/
+*.pyc
