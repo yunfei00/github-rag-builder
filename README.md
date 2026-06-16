@@ -69,3 +69,36 @@ python scripts/debug_search.py "RAG 是什么"
 ```bash
 python scripts/rag_chat.py
 ```
+
+## Project Knowledge Analysis
+
+### List Sources
+
+```bash
+python scripts/list_sources.py
+```
+
+### Project Summary
+
+```bash
+python scripts/project_summary.py nfs_scanner
+```
+
+### Compare Projects
+
+```bash
+python scripts/compare_projects.py nfs_scanner noise_source_identification
+```
+
+### Interactive RAG Chat
+
+```bash
+python scripts/rag_chat.py
+```
+
+支持：
+
+```text
+/sources
+/exit
+```

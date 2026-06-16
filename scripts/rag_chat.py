@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 
 import chromadb
-from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 
 
@@ -14,6 +13,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from src.config_loader import load_config, project_path
+from src.knowledge_utils import ask_llm, load_knowledge, source_stats
 from src.retrieval_utils import (
     build_query_text,
     candidate_count,
@@ -22,21 +22,10 @@ from src.retrieval_utils import (
 )
 
 
-def retrieve_chunks(question, cfg):
-    embedding_model_path = project_path(cfg["embedding"]["model_path"])
-    vector_db_path = project_path(cfg["vector_db"]["path"])
-    collection_name = cfg["vector_db"]["collection"]
+def retrieve_chunks(question, cfg, model, collection):
     top_k = int(cfg["retriever"]["top_k"])
-
-    model = SentenceTransformer(str(embedding_model_path))
-
-    client = chromadb.PersistentClient(path=str(vector_db_path))
-    collection = client.get_collection(name=collection_name)
-
-    query_for_embedding = build_query_text(question)
-
     query_embedding = model.encode(
-        [query_for_embedding],
+        [build_query_text(question)],
         normalize_embeddings=True
     ).tolist()
 
@@ -84,27 +73,6 @@ def build_prompt(question, chunks):
 """
 
 
-def ask_llm(prompt, cfg):
-    client = OpenAI(
-        api_key=cfg["llm"]["api_key"],
-        base_url=cfg["llm"]["base_url"]
-    )
-
-    completion = client.chat.completions.create(
-        model=cfg["llm"]["model"],
-        messages=[
-            {
-                "role": "system",
-                "content": "你是一个严谨的知识库助手，只能依据提供的资料回答。",
-            },
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0.2
-    )
-
-    return completion.choices[0].message.content or ""
-
-
 def print_retrieved_chunks(chunks):
     print("Retrieved Chunks:")
 
@@ -118,22 +86,22 @@ def print_retrieved_chunks(chunks):
         )
 
 
-def main():
-    try:
-        cfg = load_config()
-    except FileNotFoundError as exc:
-        print(f"Error: {exc}")
-        sys.exit(1)
+def print_sources(cfg):
+    items = load_knowledge(cfg)
+    print("source\tchunk_count\tfile_count")
 
-    question = input("Question: ").strip()
+    for row in source_stats(items):
+        print(f"{row['source']}\t{row['chunk_count']}\t{row['file_count']}")
 
-    if not question:
-        print("Question cannot be empty.")
-        sys.exit(1)
 
-    chunks = retrieve_chunks(question, cfg)
+def answer_question(question, cfg, model, collection):
+    chunks = retrieve_chunks(question, cfg, model, collection)
     prompt = build_prompt(question, chunks)
-    answer = ask_llm(prompt, cfg)
+    answer = ask_llm(
+        cfg,
+        "你是一个严谨的知识库助手，只能依据提供的资料回答。",
+        prompt
+    )
 
     print()
     print("Question:")
@@ -143,6 +111,39 @@ def main():
     print()
     print("Answer:")
     print(answer)
+    print()
+
+
+def main():
+    try:
+        cfg = load_config()
+    except FileNotFoundError as exc:
+        print(f"Error: {exc}")
+        sys.exit(1)
+
+    embedding_model_path = project_path(cfg["embedding"]["model_path"])
+    vector_db_path = project_path(cfg["vector_db"]["path"])
+    collection_name = cfg["vector_db"]["collection"]
+
+    model = SentenceTransformer(str(embedding_model_path))
+    client = chromadb.PersistentClient(path=str(vector_db_path))
+    collection = client.get_collection(name=collection_name)
+
+    while True:
+        question = input("Question: ").strip()
+
+        if not question:
+            continue
+
+        if question == "/exit":
+            print("Bye.")
+            break
+
+        if question == "/sources":
+            print_sources(cfg)
+            continue
+
+        answer_question(question, cfg, model, collection)
 
 
 if __name__ == "__main__":
